@@ -20,3 +20,16 @@ def construct_lut(x, y):
             g_j += 1
         LUT[g_i] = g_j
     return LUT
+
+
+def match_histogram(input_im, target_im):
+    matched = []
+
+    for c in range(3):
+        input_hist = calculate_hist(input_im[:, :, c])
+        target_hist = calculate_hist(target_im[:, :, c])
+        input_cdf = calculate_cdf(input_hist)
+        target_cdf = calculate_cdf(target_hist)
+        LUT = construct_lut(target_cdf, input_cdf)
+        matched.append(LUT[input_im[..., c]].copy()[..., np.newaxis])
+    return np.concatenate(matched, axis=2)
