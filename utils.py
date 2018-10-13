@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 def load_im(fname):
     source_im = plt.imread(fname)[:,:,:3] * 255
