@@ -32,4 +32,4 @@ def match_histogram(input_im, target_im):
         target_cdf = calculate_cdf(target_hist)
         LUT = construct_lut(target_cdf, input_cdf)
         matched.append(LUT[input_im[..., c]].copy()[..., np.newaxis])
-    return np.concatenate(matched, axis=2)
+    return np.concatenate(matched, axis=2).astype(np.uint8)
