@@ -23,27 +23,27 @@ class GUI(QMainWindow):
     def load_input(self):
         filename = QFileDialog.getOpenFileName(self, 'Open Input', '.')
         self.input = utils.load_im(filename[0])
-        m = PlotCanvas(self, width=4, height=4,
-                       img=self.input, title='Input Image')
+        m = Plotter(self, width=4, height=4,
+                    img=self.input, title='Input Image')
         m.move(50, 50)
-        m2 = PlotCanvas(self, width=5, height=5, img=self.input, hist=True)
+        m2 = Plotter(self, width=5, height=5, img=self.input, hist=True)
         m2.move(0, 450)
 
     def load_target(self):
         filename = QFileDialog.getOpenFileName(self, 'Open Target', '.')
         self.target = utils.load_im(filename[0])
-        m = PlotCanvas(self, width=4, height=4,
-                       img=self.target, title='Target Image')
+        m = Plotter(self, width=4, height=4,
+                    img=self.target, title='Target Image')
         m.move(650, 50)
-        m2 = PlotCanvas(self, width=5, height=5, img=self.target, hist=True)
+        m2 = Plotter(self, width=5, height=5, img=self.target, hist=True)
         m2.move(600, 450)
 
     def match_hist(self):
         matched = match_histogram(self.input, self.target)
-        m = PlotCanvas(self, width=4, height=4,
-                       img=matched, title='Matched Image')
+        m = Plotter(self, width=4, height=4,
+                    img=matched, title='Matched Image')
         m.move(1250, 50)
-        m2 = PlotCanvas(self, width=5, height=5, img=matched, hist=True)
+        m2 = Plotter(self, width=5, height=5, img=matched, hist=True)
         m2.move(1200, 450)
 
     def init_menu(self):
@@ -65,14 +65,14 @@ class GUI(QMainWindow):
 
     def init_size_name(self):
         self.resize(1600, 1600)
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+        frame = self.frameGeometry()
+        centerpoint = QDesktopWidget().availableGeometry().center()
+        frame.moveCenter(centerpoint)
+        self.move(frame.topLeft())
         self.setWindowTitle('Histogram Matching')
 
 
-class PlotCanvas(FigureCanvas):
+class Plotter(FigureCanvas):
 
     def __init__(self, parent=None, width=5,
                  height=4, dpi=100,
